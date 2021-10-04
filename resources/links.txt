@@ -1,0 +1,11 @@
+https://profile.iiita.ac.in/bibhas.ghoshal/lab_files/System%20calls%20for%20files%20and%20directories%20in%20Linux.html
+
+https://tldp.org/HOWTO/Bash-Prompt-HOWTO/x361.html
+
+https://web.archive.org/web/20151004211730/http://www.termsys.demon.co.uk/vtansi.htm
+
+https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html
+
+https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
+
+https://ece.uwaterloo.ca/~dwharder/icsrts/Tutorials/fork_exec/
