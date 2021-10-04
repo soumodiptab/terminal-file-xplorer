@@ -12,6 +12,7 @@
 /**************************************************************************************************************************/
 /******************************************************      MACROS       *************************************************/
 using namespace std;
+#define CLEAR_SCREEN printf("\033[H\033[J")
 /**
  * @brief coordinate x in the screen space
  * 
@@ -43,7 +44,7 @@ vector<string> input_processor(string);
  * @return true 
  * @return false 
  */
-bool create_file(string filename, string destination_path);
+bool create_file(string &filename, string &destination_path);
 
 bool create_dir(string dirname);
 /**
@@ -55,4 +56,10 @@ bool create_dir(string dirname);
  */
 bool create_file_util(vector<string> &tokens);
 void test_cases();
+/**
+ * @brief Parse the path and remove unwanted symbols
+ * 
+ * @param path 
+ * @return string 
+ */
 string path_processor(string &path);
