@@ -11,21 +11,34 @@ void display_directories(string path)
         error("Directories cannot be displayed");
         return;
     }
-
-
+    struct dirent *entry;
+    entry=readdir(dir_stream);
+    while(entry!=NULL)
+    {
+        dir_current_stream.push_back(entry->d_name);
+        entry=readdir(dir_stream);
+    }
+    sort(dir_current_stream.begin(),dir_current_stream.end());
+    int total_items=dir_current_stream.size();
+    for(int line_no=0,window_offset=dir_offset-1;line_no < total_items && window_offset < dir_max_entries; window_offset++, line_no++)
+    {
+        display_directory_entry(path,dir_current_stream[window_offset]);
+    }
 }
 void display_directory_entry(int position)
 {
-    display_directory_entry("");
+    display_directory_entry("","");
 }
-void display_directory_entry(string path)
+void display_directory_entry(string path,string name)
 {
+    path=path+"/"+name;
     struct stat entity;
     if(stat(path.c_str(),&entity)==-1)
     {
         error("Entry cannot be accessed");
         return;
     }
+    cout<<"  ";
     auto flag=entity.st_mode;
     switch (flag & S_IFMT)
     {
@@ -36,15 +49,15 @@ void display_directory_entry(string path)
         default:
         cout<<"-";
     }
-    cout<<(flag& S_IRUSR)? "r":"-";
-    cout<<(flag & S_IWUSR)? "w":"-";
-    cout<<(flag & S_IXUSR)? "x":"-";
-    cout<<(flag & S_IRGRP)? "r":"-";
-    cout<<(flag & S_IWGRP)? "w":"-";
-    cout<<(flag & S_IXGRP)? "x":"-";
-    cout<<(flag & S_IROTH)? "r":"-";
-    cout<<(flag & S_IWOTH)? "w":"-";
-    cout<<(flag & S_IXOTH)? "x":"-";
+    cout<<((flag& S_IRUSR)? "r":"-");
+    cout<<((flag & S_IWUSR)? "w":"-");
+    cout<<((flag & S_IXUSR)? "x":"-");
+    cout<<((flag & S_IRGRP)? "r":"-");
+    cout<<((flag & S_IWGRP)? "w":"-");
+    cout<<((flag & S_IXGRP)? "x":"-");
+    cout<<((flag & S_IROTH)? "r":"-");
+    cout<<((flag & S_IWOTH)? "w":"-");
+    cout<<((flag & S_IXOTH)? "x":"-");
     cout<<" ";
     string owner_name="";
     if (getpwuid(entity.st_uid) != NULL)
@@ -55,5 +68,21 @@ void display_directory_entry(string path)
     if(getgrgid(entity.st_gid)!=NULL)
         group_name=getgrgid(entity.st_gid)->gr_name;
     cout<<setw(10)<<group_name;
-    
+    cout<<" ";
+    pair<double,string> size=get_human_readable(entity.st_size);
+    cout << setw(10)<< fixed << setprecision(2) << size.first;
+    cout << setw(2)<<size.second;
+    cout<<" ";
+    string mod_time=ctime(&entity.st_mtime);
+    mod_time.pop_back();
+    cout<<setw(26)<<mod_time;
+    cout<<" ";
+    switch (flag & S_IFMT)
+    {
+        case S_IFDIR:  highlight_green(name);break;
+        case S_IFLNK:  highlight_blue(name);break;
+        default:
+        cout<<name;
+    }
+    cout<<endl;
 }

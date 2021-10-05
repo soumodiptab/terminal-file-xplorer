@@ -6,7 +6,7 @@ int terminal_width;
 int row_offset=1;
 int col_offset=1;
 int dir_max_entries;
-int dir_offset;
+int dir_offset=1;
 int divider_position;
 int row,col;
 void initialize_terminal()
@@ -37,13 +37,19 @@ void exit_raw_mode()
 }
 void highlight_red(string message)
 {
-	cout<<"\033[0;31m";
+	cout<<"\033[31m";
     cout<<message;
 	cout<<"\033[0m";
 }
 void highlight_green(string message)
 {
-    cout<<"\033[0;32m";
+    cout<<"\033[32m";
+    cout<<message;
+    cout<<"\033[0m";
+}
+void highlight_blue(string message)
+{
+    cout<<"\033[34m";
     cout<<message;
     cout<<"\033[0m";
 }

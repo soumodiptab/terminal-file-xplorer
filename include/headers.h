@@ -95,14 +95,17 @@ void test_cases();
 string path_processor(string &path);
 void highlight_red(string message);
 void highlight_green(string message);
+void highlight_blue(string message);
+void refresh_screen();
 void display_screen();
 void enter_raw_mode();
 void exit_raw_mode();
 void initialize_terminal();
 void window_resize(int signal);
 void display_directories(string path);
+void display_banner();
 void display_directory_entry(int position);
-void display_directory_entry(string path);
+void display_directory_entry(string path,string name);
 void navigator();
 /**
  * @brief clears the entire screen
@@ -129,4 +132,4 @@ void alert(string message);
 void error(string message);
 void status(string message);
 void success(string message);
-string get_human_readable(long long int size);
+pair<double,string> get_human_readable(long long int size);

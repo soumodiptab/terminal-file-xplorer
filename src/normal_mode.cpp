@@ -4,6 +4,13 @@ void init_screen()
     initialize_terminal();
     tcgetattr(STDIN_FILENO, &old_terminal);
     display_directories(dir_current_path);
+    display_banner();
+}
+void refresh_screen()
+{
+    clear_screen();
+    display_directories(dir_current_path);
+    display_banner();
 }
 void display_screen()
 {
@@ -12,13 +19,20 @@ void display_screen()
     navigator();
     exit_raw_mode();
 }
+void display_banner()
+{
+    for(int i=0;i<terminal_width;i++)
+        cout<<"-";
+    cout<<endl;
+    move_cursor(divider_position);   
+}
 void move_up()
 {
-
+    
 }
 void move_down()
 {
-    
+
 }
 void navigator()
 {
@@ -49,7 +63,6 @@ void navigator()
                 case 108:;break;//scroll down
 				
 				default:break;
-			
 		}
 	}
 }
