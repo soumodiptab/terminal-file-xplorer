@@ -4,6 +4,7 @@ stack<string> dir_forward_stream;
 vector<string> dir_current_stream;
 void display_directories(string path)
 {
+    reset_cursor();
     dir_current_stream.clear();
     DIR *dir_stream = opendir(dir_current_path.c_str());
     if(dir_stream==NULL)
@@ -20,14 +21,14 @@ void display_directories(string path)
     }
     sort(dir_current_stream.begin(),dir_current_stream.end());
     int total_items=dir_current_stream.size();
-    for(int line_no=0,window_offset=dir_offset-1;line_no < total_items && window_offset < dir_max_entries; window_offset++, line_no++)
+    for(int line_no=0,window_offset=dir_offset-1;line_no < dir_max_entries  && window_offset < total_items; window_offset++, line_no++)
     {
         display_directory_entry(path,dir_current_stream[window_offset]);
     }
 }
 void display_directory_entry(int position)
 {
-    display_directory_entry("","");
+    display_directory_entry(dir_current_path,dir_current_stream[position-1]);
 }
 void display_directory_entry(string path,string name)
 {
@@ -38,6 +39,7 @@ void display_directory_entry(string path,string name)
         error("Entry cannot be accessed");
         return;
     }
+    clear_line();
     cout<<"  ";
     auto flag=entity.st_mode;
     switch (flag & S_IFMT)

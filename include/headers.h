@@ -96,6 +96,9 @@ string path_processor(string &path);
 void highlight_red(string message);
 void highlight_green(string message);
 void highlight_blue(string message);
+void highlight_cyan(string message);
+void highlight_yellow(string message);
+void highlight_purple(string message);
 void refresh_screen();
 void display_screen();
 void enter_raw_mode();
@@ -124,6 +127,7 @@ void clear_line();
  * @param y col
  */
 void move_cursor(int x,int y);
+void reset_cursor();
 void move_cursor(int x);
 void switch_to_alternate_screen();
 void switch_back();
@@ -132,4 +136,7 @@ void alert(string message);
 void error(string message);
 void status(string message);
 void success(string message);
+void arrow();
 pair<double,string> get_human_readable(long long int size);
+string parse(string a,string b);
+void compute_cwd();

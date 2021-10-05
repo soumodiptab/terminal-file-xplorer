@@ -1,7 +1,7 @@
 #include "headers.h"
-string dir_home_path=".";
-string dir_absolute_path;
-string dir_current_path=".";
+string dir_home_path="./bin/testing";
+string dir_absolute_path=".";
+string dir_current_path="./bin/testing";
 vector<string> input_processor(string input)
 {
     vector<string>tokens;
@@ -67,4 +67,16 @@ pair<double,string> get_human_readable(long long int bytes)
             dblBytes = bytes / 1024.0;
     }
     return make_pair(dblBytes,suffix[i]);
+}
+string parse(string a,string b)
+{
+    string c=a+"/"+b;
+    return c;
+}
+void compute_cwd()
+{
+    char buffer[1024];
+    getcwd(buffer,1024);
+    dir_absolute_path=buffer;
+    dir_absolute_path.append(cu)
 }

@@ -4,11 +4,12 @@ struct termios new_terminal;
 int terminal_height;
 int terminal_width;
 int row_offset=1;
-int col_offset=1;
+int col_offset=0;
 int dir_max_entries;
 int dir_offset=1;
 int divider_position;
-int row,col;
+int row=1;
+int col=0;
 void initialize_terminal()
 {
     struct winsize term;
@@ -52,6 +53,34 @@ void highlight_blue(string message)
     cout<<"\033[34m";
     cout<<message;
     cout<<"\033[0m";
+}
+void highlight_cyan(string message)
+{
+    cout<<"\033[36m";
+    cout<<message;
+    cout<<"\033[0m";
+}
+void highlight_yellow(string message)
+{
+    cout<<"\033[33m";
+    cout<<message;
+    cout<<"\033[0m";
+}
+void highlight_purple(string message)
+{
+    cout<<"\033[35m";
+    cout<<message;
+    cout<<"\033[0m";
+}
+void arrow()
+{
+    highlight_yellow("->");
+    fflush(stdout);
+    move_cursor(row);
+}
+void reset_cursor()
+{
+    move_cursor(row_offset);
 }
 void move_cursor(int x,int y) {
 	cout<<"\033["<<x<<";"<<y<<"H";
