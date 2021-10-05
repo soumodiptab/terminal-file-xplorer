@@ -21,7 +21,7 @@ bool create_file_util(vector<string> &tokens)
         return false;
     if(tokens.size()==2)
     {
-        return create_file(tokens[0],current_absolute_path);
+        return create_file(tokens[0],dir_current_path);
     }
     else
     {

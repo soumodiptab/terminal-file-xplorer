@@ -1,8 +1,11 @@
 #include "headers.h"
-string current_absolute_path=".";
-string home_path=".";
+bool FLAG_COMMAND_MODE=false;
+bool FLAG_WINDOW_RESIZED=false;
 int main()
 {
-    test_cases();
+    switch_to_alternate_screen();
+    signal(SIGWINCH, window_resize);
+    display_screen();
+    switch_back();
     return 0;
 }
