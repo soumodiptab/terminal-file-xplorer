@@ -12,12 +12,24 @@ void refresh_screen()
     update_absolute_path();
     clear_screen();
     reset_cursor();
-    row=row_offset;
+    if(FLAG_COMMAND_MODE)
+    {
+        row=terminal_height;
+        col=3;
+    }
+    else
+    {
+        row=row_offset;
+        col=col_offset;
+    }
     dir_offset=1;
     display_directories(dir_current_path);
     display_banner();
-    reset_cursor();
-    arrow();
+    if(!FLAG_COMMAND_MODE)
+    {
+        reset_cursor();
+        arrow();
+    }
 }
 void display_screen()
 {
@@ -25,6 +37,19 @@ void display_screen()
     enter_raw_mode();
     navigator();
     exit_raw_mode();
+}
+void display_command_symbol()
+{
+    move_cursor(terminal_height);
+    clear_line();
+    highlight_blue("~");
+    highlight_purple("$");
+    move_cursor(row,col);
+}
+void clear_command()
+{
+    move_cursor(terminal_height,3);
+    clear_line();
 }
 void display_banner()
 {
@@ -60,6 +85,10 @@ void display_banner()
     cout<<"current: ";
     highlight_cyan(dir_current_path);
     cout<<endl;
+    if(FLAG_COMMAND_MODE)
+    {
+           display_command_symbol();
+    }
 }
 void move_up()
 {
@@ -204,7 +233,7 @@ void command()
 {
     FLAG_COMMAND_MODE=true;
     show_cursor();
-    display_banner();
+    refresh_screen();
     clear_status();
     start_command_mode();
     hide_cursor();
@@ -238,7 +267,7 @@ void navigator()
 
 			case 107:;break;//scroll up
 
-			case 104:home();break;//home
+			case 104:home();break;//h key
             
             case 108:;break;//scroll down
             

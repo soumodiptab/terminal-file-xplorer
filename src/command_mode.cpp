@@ -1,27 +1,60 @@
 #include "headers.h"
-void display_command_symbol()
-{
-    highlight_blue("~");
-    highlight_purple("$");
-    col=3;
-    move_cursor(terminal_height,col);
-}
 void process_command(string command_buffer)
 {
+    vector<string> parameters=input_processor(command_buffer);
+    string command=parameters[0];
+    if(command == "create_dir")
+    {
+        
+    }
+    else if(command == "create_file")
+    {
+        create_file_util(parameters);
+    }
+    else if(command == "delete_dir")
+    {
 
+    }
+    else if(command == "delete_file")
+    {
+
+    }
+    else if(command == "copy")
+    {
+
+    }
+    else if(command == "move")
+    {
+
+    }
+    else if(command == "rename")
+    {
+
+    }
+    else if(command == "goto")
+    {
+
+    }
+    else if(command == "search")
+    {
+
+    }
+    else
+    {
+        error("Incorrect command");
+    }
 }
 void start_command_mode()
 {
-    move_cursor(terminal_height);
-    display_command_symbol();
+    move_cursor(terminal_height,3);
     char ch;
     while(true)
     {
-        fflush(stdin);
         string command_buffer;
         while(true)
         {
             ch=cin.get();
+            clear_status();
             if(ch == 10 || ch == 27)// 10 - enter 27- esc
                 break;
             else if(ch == 127)//backspace
@@ -53,11 +86,11 @@ void start_command_mode()
         }
         else if(ch == 27)
         {
+            fflush(stdin);
             break;
         }
-        else
-        {
-            
-        }
+        clear_command();
+        col=3;
+        move_cursor(row,col);
     }
 }

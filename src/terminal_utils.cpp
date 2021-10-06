@@ -92,6 +92,7 @@ void reset_cursor()
 void move_cursor(int x,int y) {
     fflush(stdout);
 	cout<<"\033["<<x<<";"<<y<<"H";
+    fflush(stdout);
 }
 void move_cursor(int x)
 {
@@ -119,14 +120,14 @@ void alert(string message)
     move_cursor(terminal_height-2,0);
     clear_line();
     highlight_yellow(message);
-    move_cursor(row);
+    move_cursor(row,col);
 }
 void error(string message)
 {
     move_cursor(terminal_height-2,0);
     clear_line();
     highlight_red(message);
-    move_cursor(row);
+    move_cursor(row,col);
 }
 void status(string message)
 {
@@ -137,11 +138,11 @@ void success(string message)
     move_cursor(terminal_height-2,0);
     clear_line();
     highlight_green(message);
-    move_cursor(row);
+    move_cursor(row,col);
 }
 void clear_status()
 {
     move_cursor(terminal_height-2,0);
     clear_line();
-    move_cursor(row);
+    move_cursor(row,col);
 }

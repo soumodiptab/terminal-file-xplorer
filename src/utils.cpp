@@ -19,6 +19,8 @@ vector<string> input_processor(string input)
             temp_str+=c;;
         }
     }
+    if(!temp_str.empty())
+    tokens.push_back(temp_str);
     return tokens;
 }
 string path_processor(string &path)

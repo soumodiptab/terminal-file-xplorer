@@ -73,8 +73,6 @@ vector<string> input_processor(string);
  * @return status
  */
 bool create_file(string &filename, string &destination_path);
-
-bool create_dir(string dirname);
 /**
  * @brief create a file and do token processing
  * 
@@ -82,7 +80,7 @@ bool create_dir(string dirname);
  * @return true 
  * @return false 
  */
-bool create_file_util(vector<string> &tokens);
+void create_file_util(vector<string> &tokens);
 
 void test_cases();
 /**
@@ -166,3 +164,5 @@ void command();
 void update_absolute_path();
 void start_command_mode();
 void display_command_symbol();
+void clear_command();
+void go_to(vector<string>params);
