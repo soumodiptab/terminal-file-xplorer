@@ -1,7 +1,8 @@
 #include "headers.h"
-string dir_home_path="./bin/testing";
-string dir_absolute_path=".";
-string dir_current_path="./bin/testing";
+string dir_home_path=".";
+string dir_home_absolute_path="";
+string dir_current_absolute_path="";
+string dir_current_path=".";
 vector<string> input_processor(string input)
 {
     vector<string>tokens;
@@ -57,7 +58,7 @@ string path_processor(string &path)
 }
 pair<double,string> get_human_readable(long long int bytes)
 {
-    string suffix[]={"B","KB","GB","TB"};
+    string suffix[]={"B","KB","MB","GB"};
     int length=4;
     double dblBytes = bytes;
     int i = 0;
@@ -77,6 +78,21 @@ void compute_cwd()
 {
     char buffer[1024];
     getcwd(buffer,1024);
-    dir_absolute_path=buffer;
-    dir_absolute_path.append(cu)
+    dir_current_absolute_path=buffer;
+    dir_home_absolute_path=dir_current_absolute_path;
+}
+string parse_retrace(string path)
+{
+    string last_path=path.substr(0,path.find_last_of("/"));
+    return last_path;
+}
+void update_absolute_path()
+{
+    if(dir_current_path==".")
+        dir_current_absolute_path=dir_home_absolute_path;
+    else
+    {
+        string relative_path=dir_current_path.substr(2,dir_current_path.size()-1);
+        dir_current_absolute_path=dir_home_absolute_path+"/"+relative_path;
+    }
 }

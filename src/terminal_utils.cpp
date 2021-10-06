@@ -72,10 +72,17 @@ void highlight_purple(string message)
     cout<<message;
     cout<<"\033[0m";
 }
+void hide_cursor()
+{
+    cout<<"\e[?25l";
+}
+void show_cursor()
+{
+    cout<<"\e[?25h";
+}
 void arrow()
 {
     highlight_yellow("->");
-    fflush(stdout);
     move_cursor(row);
 }
 void reset_cursor()
@@ -83,8 +90,8 @@ void reset_cursor()
     move_cursor(row_offset);
 }
 void move_cursor(int x,int y) {
+    fflush(stdout);
 	cout<<"\033["<<x<<";"<<y<<"H";
-	fflush(stdout);
 }
 void move_cursor(int x)
 {
@@ -93,6 +100,7 @@ void move_cursor(int x)
 void clear_line()
 {
     cout<<"\033[K";
+    fflush(stdout);
 }
 void clear_screen()
 {
@@ -110,12 +118,15 @@ void alert(string message)
 {
     move_cursor(terminal_height-2,0);
     clear_line();
+    highlight_yellow(message);
+    move_cursor(row);
 }
 void error(string message)
 {
     move_cursor(terminal_height-2,0);
     clear_line();
     highlight_red(message);
+    move_cursor(row);
 }
 void status(string message)
 {
@@ -123,5 +134,14 @@ void status(string message)
 }
 void success(string message)
 {
-
+    move_cursor(terminal_height-2,0);
+    clear_line();
+    highlight_green(message);
+    move_cursor(row);
+}
+void clear_status()
+{
+    move_cursor(terminal_height-2,0);
+    clear_line();
+    move_cursor(row);
 }

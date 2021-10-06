@@ -50,7 +50,8 @@ extern int col_offset;
 extern int row_offset;
 extern int divider_position;
 extern string dir_home_path;
-extern string dir_absolute_path;
+extern string dir_home_absolute_path;
+extern string dir_current_absolute_path;
 extern string dir_current_path;
 extern stack<string> dir_backward_stream;
 extern stack<string> dir_forward_stream;
@@ -127,6 +128,8 @@ void clear_line();
  * @param y col
  */
 void move_cursor(int x,int y);
+void hide_cursor();
+void show_cursor();
 void reset_cursor();
 void move_cursor(int x);
 void switch_to_alternate_screen();
@@ -137,6 +140,30 @@ void error(string message);
 void status(string message);
 void success(string message);
 void arrow();
+void clear_status();
 pair<double,string> get_human_readable(long long int size);
+/**
+ * @brief 
+ * 
+ * @param a current_path 
+ * @param b entity
+ * @return current_path/entity 
+ */
 string parse(string a,string b);
 void compute_cwd();
+/**
+ * @brief 
+ * 
+ * @param path path/entity
+ * @return string path
+ */
+string parse_retrace(string path);
+void move_forward();
+void move_backward();
+void move_level_up();
+void move_up();
+void move_down();
+void home();
+void command();
+void update_absolute_path();
+void start_command_mode();
