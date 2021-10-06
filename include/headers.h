@@ -6,8 +6,6 @@
 #include <dirent.h>
 #include <grp.h>
 #include <pwd.h>
-#include<sys/wait.h> 
-#include <sys/types.h>
 #include <fcntl.h>
 /**************************************************************************************************************************/
 /********************************************************** MACROS ********************************************************/
@@ -167,3 +165,4 @@ void home();
 void command();
 void update_absolute_path();
 void start_command_mode();
+void display_command_symbol();

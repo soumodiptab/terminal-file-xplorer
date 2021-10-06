@@ -202,11 +202,13 @@ void home()
 }
 void command()
 {
-    show_cursor();
     FLAG_COMMAND_MODE=true;
+    show_cursor();
     display_banner();
+    clear_status();
     start_command_mode();
     hide_cursor();
+    FLAG_COMMAND_MODE=false;
     refresh_screen();
 }
 void navigator()
@@ -215,32 +217,32 @@ void navigator()
     reset_cursor();
     arrow();
     char ch=' ';
-	while(ch!='q'){
-	
-			ch=cin.get();	
+	while(ch!='q')
+    {
+		ch=cin.get();	
+		switch(ch)
+        {
+			case ':':command();break;//command mode
+			
+            case 10:enter();break;//enter key
+			
+            case 127:move_level_up();break;//backspace
 
-			switch(ch){
-				case ':':command();break;//command mode
+			case 65:move_up();break; // up arrow
 
-				case 10:enter();break;//enter key
+            case 66:move_down();break; // down arrow
 
-				case 127:move_level_up();break;//backspace
+            case 67:move_forward();break; //-> arrow
 
-				case 65:move_up();break; // up arrow
+			case 68:move_backward();break; // <- arrow
 
-                case 66:move_down();break; // down arrow
+			case 107:;break;//scroll up
 
-                case 67:move_forward();break; //-> arrow
-
-				case 68:move_backward();break; // <- arrow
-
-				case 107:;break;//scroll up
-
-				case 104:home();break;//home
-
-                case 108:;break;//scroll down
-				
-				default:break;
+			case 104:home();break;//home
+            
+            case 108:;break;//scroll down
+            
+            default:break;
 		}
 	}
 }
