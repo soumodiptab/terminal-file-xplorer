@@ -1,4 +1,17 @@
 #include "headers.h"
+bool directory_query(string path)
+{
+    struct stat entity;
+    if(stat(path.c_str(),&entity)==-1)
+    {
+        return false;
+    }
+    if(!S_ISDIR(entity.st_mode))
+    {
+        return false;
+    }
+    return true;
+}
 void go_to(vector<string> params)
 {
     if(params.size()==1)
@@ -7,7 +20,18 @@ void go_to(vector<string> params)
     }
     else if(params.size()==2)
     {
-        refresh_screen();
+        string destination_path=path_processor(params[1]);
+        if(directory_query(destination_path))
+        {
+            dir_backward_stream.push(dir_current_path);
+            dir_current_path=destination_path;
+            refresh_screen();
+            success("Moved to : ["+dir_current_path+"]");
+        }
+        else
+        {
+            error("Invalid target directory");
+        }
     }
     else
     {

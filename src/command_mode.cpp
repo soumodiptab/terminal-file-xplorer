@@ -33,7 +33,7 @@ void process_command(string command_buffer)
     }
     else if(command == "goto")
     {
-
+        go_to(parameters);
     }
     else if(command == "search")
     {

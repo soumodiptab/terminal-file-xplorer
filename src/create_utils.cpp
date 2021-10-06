@@ -27,17 +27,17 @@ void create_file_util(vector<string> &tokens)
     }
     if(tokens.size()==2)
     {
-         if(!create_file(tokens[0],dir_current_path))
+         if(!create_file(tokens[1],dir_current_path))
          {
-             errors.push_back(tokens[0]);
+             errors.push_back(tokens[1]);
          }
     }
     else
     {
         string destination_path=path_processor(tokens[tokens.size()-1]);
-        for(int i=1;i<tokens.size()-2;i++)
+        for(int i=1;i<tokens.size()-1;i++)
         {
-            if(!create_file(tokens[i],dir_current_path))
+            if(!create_file(tokens[i],destination_path))
             {
                 errors.push_back(tokens[i]);
             }
@@ -50,10 +50,10 @@ void create_file_util(vector<string> &tokens)
     else
     {
         string message="";
-        for(auto i:errors)
+        for(string i:errors)
         {
             message=message+" "+i;
         }
-        error("Unable to create:");
+        error("Unable to create: "+message);
     }
 }
