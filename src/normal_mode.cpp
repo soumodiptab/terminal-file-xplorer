@@ -226,8 +226,14 @@ void enter()
 }
 void home()
 {
+    if(dir_current_path == dir_home_path)
+    {
+        error("Already in home");
+        return;
+    }
     dir_current_path=dir_home_path;
     refresh_screen();
+    success("Going to home");
 }
 void command()
 {

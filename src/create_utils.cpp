@@ -7,8 +7,7 @@ bool create_file(string &filename, string &destination_path)
     {
         return false;
     }
-    else 
-        return true;
+    return true;
 }
 void create_file_util(vector<string> &tokens)
 {
@@ -62,14 +61,12 @@ bool create_directory(string &dir_name, string &destination_path)
 {
 
     string final_path=parse(destination_path,dir_name);
-
     int return_status=mkdir(final_path.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     if(return_status==-1)
     {
         return false;
     }
-    else 
-        return true;
+    return true;
 }
 void create_directory_util(vector<string> &tokens)
 {

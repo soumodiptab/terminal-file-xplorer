@@ -13,15 +13,15 @@ void process_command(string command_buffer)
     }
     else if(command == "delete_dir")
     {
-
+        delete_directory_util(parameters);
     }
     else if(command == "delete_file")
     {
-
+        delete_file_util(parameters);
     }
     else if(command == "copy")
     {
-
+        
     }
     else if(command == "move")
     {
@@ -37,7 +37,7 @@ void process_command(string command_buffer)
     }
     else if(command == "search")
     {
-
+        search_util(parameters);
     }
     else
     {

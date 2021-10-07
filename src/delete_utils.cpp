@@ -7,14 +7,11 @@ bool delete_file(string &name, string &destination_path)
     {
         return false;
     }
-    else
-    {
         return true;
-    }
 }
 bool delete_directory(string &name, string &destination_path)
 {
-
+    
 }
 void delete_file_util(vector<string> &tokens)
 {
@@ -25,7 +22,7 @@ void delete_file_util(vector<string> &tokens)
         error("No arguments provided");
         return;
     }
-    if(tokens.size()==2)
+    else if(tokens.size()==2)
     {
          if(!delete_file(tokens[1],dir_current_path))
          {

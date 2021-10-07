@@ -129,10 +129,6 @@ void error(string message)
     highlight_red(message);
     move_cursor(row,col);
 }
-void status(string message)
-{
-
-}
 void success(string message)
 {
     move_cursor(terminal_height-2,0);
