@@ -1,22 +1,21 @@
 #include "headers.h"
-bool delete_file(string &name, string &destination_path)
+bool delete_file(string &destination_path)
 {
-    string final_path=parse(destination_path,name);
-    int return_status=remove(final_path.c_str());
+    int return_status=remove(destination_path.c_str());
     if(return_status==-1)
-    {
         return false;
-    }
-        return true;
+    return true;
 }
-bool delete_directory(string &name, string &destination_path)
-{
 
+bool delete_directory(string &destination_path)
+{
+    int return_status=rmdir(destination_path.c_str());
+    if(return_status==-1)
+        return false;
+    return true;
 }
 void delete_file_util(vector<string> &tokens)
 {
-    bool flag=true;
-    vector<string>errors;
     if(tokens.size()==1)
     {
         error("No arguments provided");
@@ -24,38 +23,75 @@ void delete_file_util(vector<string> &tokens)
     }
     else if(tokens.size()==2)
     {
-         if(!delete_file(tokens[1],dir_current_path))
-         {
-             errors.push_back(tokens[1]);
-         }
+        string destination_path=path_processor(tokens[1]);
+        if(delete_file(destination_path))
+        {
+            success("Successfully deleted: [ "+destination_path+" ]");
+        }
+        else
+        {
+            error("Unable to delete: ["+destination_path+" ]");
+        }
     }
     else
     {
-        string destination_path=path_processor(tokens[tokens.size()-1]);
-        for(int i=1;i<tokens.size()-1;i++)
+        error("Too many arguments provided");
+    }
+}
+void delete_directory_recursive(string &path)
+{
+    bool flag=false;
+    DIR* dir_stream=opendir(path.c_str());
+    if(dir_stream==NULL)
+    {
+        return;
+    }
+    struct dirent* entity=readdir(dir_stream);
+    while(entity!=NULL)
+    {
+        string new_path=parse(path,string(entity->d_name));
+        if(strcmp(entity->d_name,".")!=0 && strcmp(entity->d_name,"..")!=0)
         {
-            if(!delete_file(tokens[i],destination_path))
+            struct stat new_entity;
+            if(stat(path.c_str(),&new_entity)!=-1)
             {
-                errors.push_back(tokens[i]);
+                if(S_ISDIR(new_entity.st_mode))
+                {
+                    delete_directory_recursive(new_path);
+                }
+                else
+                {
+                    delete_file(new_path);
+                }
             }
         }
+        entity=readdir(dir_stream);
     }
-    if(errors.empty())
-    {
-        refresh_screen();
-        success("File/s deleted successfully");
-    }
-    else
-    {
-        string message="";
-        for(string i:errors)
-        {
-            message=message+" "+i;
-        }
-        error("Unable to delete: ["+message+" ]");
-    }
+    closedir(dir_stream);
+    delete_directory(path);
 }
 void delete_directory_util(vector<string> &tokens)
 {
-   
+    if(tokens.size()==1)
+    {
+        error("No arguments provided");
+        return;
+    }
+    else if(tokens.size()==2)
+    {
+        string destination_path=path_processor(tokens[1]);
+        if(directory_query(destination_path))
+        {
+
+            success("Successfully deleted: [ "+destination_path+" ]");
+        }
+        else
+        {
+            error("Directory does not exist");
+        }
+    }
+    else
+    {
+        error("Too many arguments provided");
+    }
 }
