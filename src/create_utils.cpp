@@ -44,6 +44,7 @@ void create_file_util(vector<string> &tokens)
     }
     if(errors.empty())
     {
+        refresh_screen();
         success("File/s created successfully");
     }
     else
@@ -97,6 +98,7 @@ void create_directory_util(vector<string> &tokens)
     }
     if(errors.empty())
     {
+        refresh_screen();
         success("Directory/ies created successfully");
     }
     else

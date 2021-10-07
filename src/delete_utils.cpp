@@ -11,7 +11,7 @@ bool delete_file(string &name, string &destination_path)
 }
 bool delete_directory(string &name, string &destination_path)
 {
-    
+
 }
 void delete_file_util(vector<string> &tokens)
 {
@@ -42,6 +42,7 @@ void delete_file_util(vector<string> &tokens)
     }
     if(errors.empty())
     {
+        refresh_screen();
         success("File/s deleted successfully");
     }
     else
@@ -56,5 +57,5 @@ void delete_file_util(vector<string> &tokens)
 }
 void delete_directory_util(vector<string> &tokens)
 {
-
+   
 }

@@ -17,7 +17,7 @@ bool search(string path,string target)
             closedir(dir_stream);
             return true;
         }
-        if(entity->d_type == DT_DIR && strcmp(entity->d_name,".")!=0 && strcmp(entity->d_name,"..")!=0)
+        if(directory_query(new_path) && strcmp(entity->d_name,".")!=0 && strcmp(entity->d_name,"..")!=0)
         {
             flag= flag || search(new_path,target);
             if(flag)
