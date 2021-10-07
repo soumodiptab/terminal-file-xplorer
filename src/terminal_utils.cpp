@@ -82,7 +82,7 @@ void show_cursor()
 }
 void arrow()
 {
-    highlight_yellow("->");
+    highlight_green("->");
     move_cursor(row);
 }
 void reset_cursor()

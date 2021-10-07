@@ -274,4 +274,5 @@ void navigator()
             default:break;
 		}
 	}
+    show_cursor();
 }

@@ -5,7 +5,7 @@ void process_command(string command_buffer)
     string command=parameters[0];
     if(command == "create_dir")
     {
-        
+        create_directory_util(parameters);
     }
     else if(command == "create_file")
     {
