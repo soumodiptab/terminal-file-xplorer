@@ -22,9 +22,11 @@ void initialize_terminal()
 void window_resize(int signal)
 {
     initialize_terminal();
-    exit_raw_mode();
-    FLAG_WINDOW_RESIZED=true;
-    enter_raw_mode();
+    refresh_screen();
+    if(FLAG_COMMAND_MODE)
+    {
+        restore_command_buffer();
+    }
 }
 void enter_raw_mode()
 {

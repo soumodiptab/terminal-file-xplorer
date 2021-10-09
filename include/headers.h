@@ -54,6 +54,7 @@ extern string dir_current_path;
 extern stack<string> dir_backward_stream;
 extern stack<string> dir_forward_stream;
 extern vector<string> dir_current_stream;
+extern string command_buffer;
 /**************************************************************************************************************************/
 /*************************************************** All api declarations here ********************************************/
 /**************************************************************************************************************************/
@@ -184,3 +185,4 @@ bool copy_file(string &source,string &destination);
 bool rename_file(string &old_name,string &new_name);
 void rename_util(vector<string>&tokens);
 void move_util(vector<string> &tokens);
+void restore_command_buffer();

@@ -1,4 +1,16 @@
 #include "headers.h"
+string command_buffer;
+void restore_command_buffer()
+{
+    clear_command();
+    move_cursor(row,col);
+    if(command_buffer.length()>0)
+    {
+        cout<<command_buffer;
+        fflush(stdout);
+        col=col+command_buffer.length();
+    }
+}
 void process_command(string command_buffer)
 {
     vector<string> parameters=input_processor(command_buffer);
@@ -50,7 +62,8 @@ void start_command_mode()
     char ch;
     while(true)
     {
-        string command_buffer;
+        if(!command_buffer.empty())
+            command_buffer.clear();
         while(true)
         {
             ch=cin.get();
