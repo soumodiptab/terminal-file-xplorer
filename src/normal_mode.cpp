@@ -203,7 +203,7 @@ void enter()
             dir_backward_stream.push(dir_current_path);
             dir_current_path=path;
             refresh_screen();
-            success("Going into : "+selected_entity);
+            success("Going into : [ "+selected_entity+" ]");
         }
     }
     else

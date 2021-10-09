@@ -26,6 +26,7 @@ void delete_file_util(vector<string> &tokens)
         string destination_path=path_processor(tokens[1]);
         if(delete_file(destination_path))
         {
+            refresh_screen();
             success("Successfully deleted: [ "+destination_path+" ]");
         }
         else
@@ -38,13 +39,13 @@ void delete_file_util(vector<string> &tokens)
         error("Too many arguments provided");
     }
 }
-void delete_directory_recursive(string &path)
+bool delete_directory_recursive(string &path)
 {
-    bool flag=false;
+    bool flag=true;
     DIR* dir_stream=opendir(path.c_str());
     if(dir_stream==NULL)
     {
-        return;
+        return false;
     }
     struct dirent* entity=readdir(dir_stream);
     while(entity!=NULL)
@@ -53,22 +54,28 @@ void delete_directory_recursive(string &path)
         if(strcmp(entity->d_name,".")!=0 && strcmp(entity->d_name,"..")!=0)
         {
             struct stat new_entity;
-            if(stat(path.c_str(),&new_entity)!=-1)
+            if(stat(new_path.c_str(),&new_entity)!=-1)
             {
                 if(S_ISDIR(new_entity.st_mode))
                 {
-                    delete_directory_recursive(new_path);
+                    flag&=delete_directory_recursive(new_path);
                 }
                 else
                 {
-                    delete_file(new_path);
+                    flag&=delete_file(new_path);
                 }
             }
+        }
+        if(!flag)
+        {
+            closedir(dir_stream);
+            return flag;
         }
         entity=readdir(dir_stream);
     }
     closedir(dir_stream);
     delete_directory(path);
+    return flag;
 }
 void delete_directory_util(vector<string> &tokens)
 {
@@ -82,8 +89,15 @@ void delete_directory_util(vector<string> &tokens)
         string destination_path=path_processor(tokens[1]);
         if(directory_query(destination_path))
         {
-
-            success("Successfully deleted: [ "+destination_path+" ]");
+            if(delete_directory_recursive(destination_path))
+            {
+                refresh_screen();
+                success("Successfully deleted: [ "+destination_path+" ]");
+            }
+            else
+            {
+                error("Could not delete directory");
+            }
         }
         else
         {
