@@ -1,17 +1,4 @@
 #include "headers.h"
-bool directory_query(string path)
-{
-    struct stat entity;
-    if(stat(path.c_str(),&entity)==-1)
-    {
-        return false;
-    }
-    if(!S_ISDIR(entity.st_mode))
-    {
-        return false;
-    }
-    return true;
-}
 void go_to(vector<string> params)
 {
     if(params.size()==1)

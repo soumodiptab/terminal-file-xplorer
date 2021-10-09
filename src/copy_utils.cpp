@@ -20,9 +20,10 @@ bool copy_file(string &source,string &destination)
     stat(source.c_str(),&source_details);
     blksize_t optimal_buffer_size= source_details.st_blksize;
     char buffer[optimal_buffer_size];
-    while(read(file_descriptor_source,&buffer,optimal_buffer_size))
+    size_t offset_size;
+    while((offset_size=read(file_descriptor_source,&buffer,optimal_buffer_size))>0)
     {
-        write(file_descriptor_dest,&buffer,optimal_buffer_size);
+        write(file_descriptor_dest,&buffer,offset_size);
     }
     close(file_descriptor_source);
     close(file_descriptor_dest);
@@ -40,7 +41,18 @@ bool copy_file(string &source,string &destination)
  */
 bool copy_directory(string &source,string &destination)
 {
-
+    int return_status=mkdir(destination.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    if(return_status==-1)
+    {
+        return false;
+    }
+    struct stat directory;
+    if(stat(source.c_str(),&directory)==-1)
+    {
+        return false;
+    }
+    set_metadata(destination,directory);
+    return true;
 }
 
 bool copy_directory_recursive(string &source_path,string &destination_path)
@@ -51,22 +63,26 @@ bool copy_directory_recursive(string &source_path,string &destination_path)
     {
         return false;
     }
+    string new_dest_path=parse(destination_path,extract_name(source_path));
+    copy_directory(source_path,new_dest_path);
+
     struct dirent* entity=readdir(dir_stream);
     while(entity!=NULL)
     {
-        string new_path=parse(path,string(entity->d_name));
+        string branch_source_path=parse(source_path,string(entity->d_name));
         if(strcmp(entity->d_name,".")!=0 && strcmp(entity->d_name,"..")!=0)
         {
             struct stat new_entity;
-            if(stat(new_path.c_str(),&new_entity)!=-1)
+            if(stat(branch_source_path.c_str(),&new_entity)!=-1)
             {
                 if(S_ISDIR(new_entity.st_mode))
                 {
-                    flag&=delete_directory_recursive(new_path);
+                    flag&=copy_directory_recursive(branch_source_path,new_dest_path);
                 }
                 else
                 {
-                    flag&=delete_file(new_path);
+                    string branch_dest_path=parse(new_dest_path,string(entity->d_name));
+                    flag&=copy_file(branch_source_path,branch_dest_path);
                 }
             }
         }
@@ -78,7 +94,6 @@ bool copy_directory_recursive(string &source_path,string &destination_path)
         entity=readdir(dir_stream);
     }
     closedir(dir_stream);
-    delete_directory(path);
     return flag;
 }
 
@@ -93,17 +108,31 @@ void copy_util(vector<string> &tokens)
     }
     if(tokens.size()==2)
     {
-         if(!create_file(tokens[1],dir_current_path))
-         {
-             errors.push_back(tokens[1]);
-         }
+        error("Invalid number of arguments");
+        return;
     }
     else
     {
         string destination_path=path_processor(tokens[tokens.size()-1]);
+        if(!directory_query(destination_path))
+        {
+            error("Destination directory does not exist");
+        }
         for(int i=1;i<tokens.size()-1;i++)
         {
-            if(!create_file(tokens[i],destination_path))
+            string eval_source_path=parse(dir_current_path,tokens[i]);
+            if(directory_query(eval_source_path))
+            {
+                copy_directory_recursive(eval_source_path,destination_path);
+                refresh_screen();
+            }
+            else if(file_query(eval_source_path))
+            {
+                string new_dest_path=parse(destination_path,tokens[i]);
+                copy_file(eval_source_path,new_dest_path);
+                refresh_screen();
+            }
+            else
             {
                 errors.push_back(tokens[i]);
             }
@@ -112,7 +141,7 @@ void copy_util(vector<string> &tokens)
     if(errors.empty())
     {
         refresh_screen();
-        success("File/s created successfully");
+        success("Files/Folders successfully copied");
     }
     else
     {
@@ -121,6 +150,6 @@ void copy_util(vector<string> &tokens)
         {
             message=message+" "+i;
         }
-        error("Unable to create: ["+message+" ]");
+        error("Unable to copy: ["+message+" ]");
     }
 }

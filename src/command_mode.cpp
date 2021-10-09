@@ -21,15 +21,15 @@ void process_command(string command_buffer)
     }
     else if(command == "copy")
     {
-        
+        copy_util(parameters);
     }
     else if(command == "move")
     {
-
+        move_util(parameters);    
     }
     else if(command == "rename")
     {
-
+        rename_util(parameters);
     }
     else if(command == "goto")
     {

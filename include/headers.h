@@ -153,6 +153,7 @@ void compute_cwd();
  * @return string path
  */
 string parse_retrace(string path);
+string extract_name(string path);
 void move_forward();
 void move_backward();
 void move_level_up();
@@ -166,6 +167,7 @@ void display_command_symbol();
 void clear_command();
 void go_to(vector<string>params);
 bool directory_query(string path);
+bool file_query(string path);
 bool create_directory(string &dir_name, string &destination_path);
 void create_directory_util(vector<string> &tokens);
 bool delete_file(string &destination_path);
@@ -179,3 +181,6 @@ void copy_util(vector<string> &tokens);
 bool copy_directory_recursive(string &source_path,string &destination_path);
 bool copy_directory(string &source,string &destination);
 bool copy_file(string &source,string &destination);
+bool rename_file(string &old_name,string &new_name);
+void rename_util(vector<string>&tokens);
+void move_util(vector<string> &tokens);

@@ -54,7 +54,7 @@ string path_processor(string &path)
     }
     else
     {
-        computed_path=dir_current_path+"/"+path.substr(2,path.length()-2);
+        computed_path=dir_current_path+"/"+path;
     }
     return computed_path;
 }
@@ -88,6 +88,12 @@ string parse_retrace(string path)
     string last_path=path.substr(0,path.find_last_of("/"));
     return last_path;
 }
+string extract_name(string path)
+{
+    int loc=path.find_last_of("/");
+    string name=path.substr(loc+1,path.length()-loc-1);
+    return name;
+}
 void update_absolute_path()
 {
     if(dir_current_path==".")
@@ -97,4 +103,30 @@ void update_absolute_path()
         string relative_path=dir_current_path.substr(2,dir_current_path.size()-1);
         dir_current_absolute_path=dir_home_absolute_path+"/"+relative_path;
     }
+}
+bool directory_query(string path)
+{
+    struct stat entity;
+    if(stat(path.c_str(),&entity)==-1)
+    {
+        return false;
+    }
+    if(!S_ISDIR(entity.st_mode))
+    {
+        return false;
+    }
+    return true;
+}
+bool file_query(string path)
+{
+    struct stat entity;
+    if(stat(path.c_str(),&entity)==-1)
+    {
+        return false;
+    }
+    if(!S_ISREG(entity.st_mode))
+    {
+        return false;
+    }
+    return true;
 }
