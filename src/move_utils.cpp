@@ -19,6 +19,7 @@ void move_util(vector<string> &tokens)
         if(!directory_query(destination_path))
         {
             error("Destination directory does not exist");
+            return;
         }
         for(int i=1;i<tokens.size()-1;i++)
         {
