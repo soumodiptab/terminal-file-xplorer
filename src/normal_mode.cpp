@@ -145,6 +145,8 @@ void move_level_up()
     else
     {
         dir_backward_stream.push(dir_current_path);
+        while(!dir_forward_stream.empty())
+            dir_forward_stream.pop();
         dir_current_path=parse_retrace(dir_current_path);
         refresh_screen();
         alert("Going to parent directory");
@@ -231,6 +233,9 @@ void home()
         error("Already in home");
         return;
     }
+    while(!dir_forward_stream.empty())
+        dir_forward_stream.pop();
+    dir_backward_stream.push(dir_current_path);
     dir_current_path=dir_home_path;
     refresh_screen();
     success("Going to home");

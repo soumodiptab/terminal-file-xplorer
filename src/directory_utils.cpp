@@ -64,20 +64,27 @@ void display_directory_entry(string path,string name)
     string owner_name="";
     if (getpwuid(entity.st_uid) != NULL)
         owner_name=getpwuid(entity.st_uid)->pw_name;
-    cout<<setw(10)<<owner_name;
+    cout<<"\033[34m";
+    cout<<setw(15)<<owner_name;
+    cout<<"\033[0m";
     cout<<" ";
     string group_name="";
     if(getgrgid(entity.st_gid)!=NULL)
         group_name=getgrgid(entity.st_gid)->gr_name;
-    cout<<setw(10)<<group_name;
+    cout<<"\033[34m";
+    cout<<setw(15)<<group_name;
+    cout<<"\033[0m";
     cout<<" ";
     pair<double,string> size=get_human_readable(entity.st_size);
     cout << setw(10)<< fixed << setprecision(2) << size.first;
+    cout <<" ";
     cout << setw(2)<<size.second;
     cout<<" ";
     string mod_time=ctime(&entity.st_mtime);
     mod_time.pop_back();
+    cout<<"\033[33m";
     cout<<setw(26)<<mod_time;
+    cout<<"\033[0m";
     cout<<" ";
     switch (flag & S_IFMT)
     {
