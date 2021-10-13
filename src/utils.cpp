@@ -62,14 +62,14 @@ pair<double,string> get_human_readable(long long int bytes)
 {
     string suffix[]={"B","KB","MB","GB"};
     int length=4;
-    double dblBytes = bytes;
+    double dbl_bytes = bytes;
     int i = 0;
     if (bytes > 1024)
     {
         for (i = 0; (bytes / 1024) > 0 && i < length - 1; i++, bytes /= 1024)
-            dblBytes = bytes / 1024.0;
+            dbl_bytes = bytes / 1024.0;
     }
-    return make_pair(dblBytes,suffix[i]);
+    return make_pair(dbl_bytes,suffix[i]);
 }
 string parse(string a,string b)
 {
