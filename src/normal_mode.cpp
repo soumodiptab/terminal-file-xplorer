@@ -36,7 +36,12 @@ void display_screen()
     init_screen();
     enter_raw_mode();
     navigator();
+}
+void cleanup_screen()
+{
+    show_cursor();
     exit_raw_mode();
+    switch_back();
 }
 void display_command_symbol()
 {
@@ -297,14 +302,14 @@ void navigator()
 
 			case 68:move_backward();break; // <- arrow
 
-			case 107:window_scroll_up();break;//scroll up
+			case 107:window_scroll_up();break;//scroll up k
 
 			case 104:home();break;//h key
             
-            case 108:window_scroll_down();break;//scroll down
+            case 108:window_scroll_down();break;//scroll down l
             
             default:break;
 		}
 	}
-    show_cursor();
+    exit(0);
 }

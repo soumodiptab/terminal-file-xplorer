@@ -189,3 +189,4 @@ void rename_util(vector<string>&tokens);
 bool move(string &source_path,string &destination_path);
 void move_util(vector<string> &tokens);
 void restore_command_buffer();
+void cleanup_screen();

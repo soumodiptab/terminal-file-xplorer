@@ -51,6 +51,10 @@ void process_command(string command_buffer)
     {
         search_util(parameters);
     }
+    else if(command == "q")
+    {
+        exit(0);
+    }
     else
     {
         error("Incorrect command");
@@ -88,7 +92,7 @@ void start_command_mode()
         }
         if(ch == 10)//enter was pressed
         {
-            if(command_buffer.length()>1)
+            if(command_buffer.length()>=1)
             {
                 process_command(command_buffer);
             }
