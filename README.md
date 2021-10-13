@@ -1,4 +1,8 @@
 # Terminal-Based-File-Explorer
-Terminal Based file Explorer with a normal mode for navigation and command mode for utility tasks
+This Repository contains the Terminal Based File Explorer built as part of Advanced Operating Systems Coursework.
 
+### Libraries Used:
+
+
+## Features:
 Put all files in a single directory for compiling use g++ *.cpp and then use ./a.out

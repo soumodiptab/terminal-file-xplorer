@@ -136,6 +136,27 @@ void move_down()
     else
         alert("You hit bottom");
 }
+void window_scroll_up()
+{
+    if(dir_offset!=1)
+    {
+        dir_offset=max(1,dir_offset-dir_max_entries);
+        display_directories(dir_current_path);
+        move_cursor(row);
+        arrow();
+    }
+}
+void window_scroll_down()
+{
+    int max_value=dir_current_stream.size()-dir_max_entries+1;
+    if(dir_offset!=max_value)
+    {
+        dir_offset=min(max_value,dir_offset+dir_max_entries);
+        display_directories(dir_current_path);
+        move_cursor(row);
+        arrow();
+    }
+}
 void move_level_up()
 {
     if(dir_current_path == ".")
@@ -276,11 +297,11 @@ void navigator()
 
 			case 68:move_backward();break; // <- arrow
 
-			case 107:;break;//scroll up
+			case 107:window_scroll_up();break;//scroll up
 
 			case 104:home();break;//h key
             
-            case 108:;break;//scroll down
+            case 108:window_scroll_down();break;//scroll down
             
             default:break;
 		}
