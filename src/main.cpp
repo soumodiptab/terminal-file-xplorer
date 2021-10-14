@@ -1,7 +1,7 @@
 #include "headers.h"
 bool FLAG_COMMAND_MODE=false;
 bool FLAG_WINDOW_RESIZED=false;
-bool LINUX_MODE=true;
+bool LINUX_MODE=false;
 int main()
 {
     atexit(cleanup_screen);
