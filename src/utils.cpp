@@ -3,6 +3,26 @@ string dir_home_path=".";
 string dir_home_absolute_path="";
 string dir_current_absolute_path="";
 string dir_current_path=".";
+void linux_mode()
+{
+    const char *homedir;
+    if ((homedir = getenv("HOME")) == NULL)
+        homedir = getpwuid(getuid())->pw_dir;
+    string temp_path=dir_home_absolute_path;
+    dir_home_absolute_path=string(homedir);
+    chdir(dir_home_absolute_path.c_str());
+    stack<string>dirs;
+    while(temp_path != dir_home_absolute_path)
+    {
+        dirs.push(extract_name(temp_path));
+        temp_path=parse_retrace(temp_path);
+    }
+    while(!dirs.empty())
+    {
+        dir_current_path=parse(dir_current_path,dirs.top());
+        dirs.pop();
+    }
+}
 vector<string> input_processor(string input)
 {
     vector<string>tokens;
