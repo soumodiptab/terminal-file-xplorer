@@ -3,11 +3,9 @@ This Repository contains the Terminal Based File Explorer built as part of Advan
 ## BRIEF:
 This Repository is the implementation of File-Explorer in Terminal as part of Advanced Operating Systems Coursework using the proper invocations of various system call and not relying on ncurses for GUI.
 ## ASSUMPTIONS:
-As per the PDF and by TA Kunal Kandhari on Teams:
-* The root of your application should be the directory where the application was started. [stated in PDF/TA]
-* Home - h key should take the user to the home folder (the folder where the application was started). [stated in PDF]
-## For TAs: 
-Put all files in a single directory for compiling use g++ *.cpp and then use ./a.out
+As per the ASSIGNMENT PDF:
+* The root of your application should be the directory where the application was started.
+* Home - h key should take the user to the home folder (the folder where the application was started).
 ## Makefile users:
 Binaries are present in `/bin`
 * `make`: Builds the binaries
