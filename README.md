@@ -93,3 +93,4 @@ All the commands are built in a way that their actions are reflected in a live w
 #### ADDITIONAL IMPLEMENTATIONS:
 * The cursor is hidden in normal mode and an arrow is printed to point the directory entry.
 * Auto resize: Window resize automatically resizes everything in the explorer as well as maintains the command buffer in command mode.
+* It has alternate linux mode configuration that can be switched on that changes the paths to use normal linux paths. Just change the boolean flag to true.
